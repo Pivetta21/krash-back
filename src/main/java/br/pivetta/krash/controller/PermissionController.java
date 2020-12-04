@@ -1,6 +1,9 @@
 package br.pivetta.krash.controller;
 
+import br.pivetta.krash.dto.ClientDTO;
+import br.pivetta.krash.model.Client;
 import br.pivetta.krash.model.Permission;
+import br.pivetta.krash.repository.ClientRepository;
 import br.pivetta.krash.repository.PermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -23,10 +26,12 @@ import java.util.Optional;
 public class PermissionController {
     @Autowired
     private PermissionRepository permissionRepository;
+    @Autowired
+    private ClientRepository clientRepository;
 
     @Cacheable(value = "permissionsList")
     @GetMapping
-    public Page<Permission> getPermissions(
+    public Page<Permission> showPermissions(
             @RequestParam(required = false) String permissionName,
             @PageableDefault(sort = "id", direction = Sort.Direction.ASC, page = 0, size = 10) Pageable pageable
     ) {
@@ -73,6 +78,24 @@ public class PermissionController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @Transactional
+    @PutMapping("/client/{id}")
+    public ResponseEntity<ClientDTO> updateClientPermission(@PathVariable Long id, @RequestBody Permission permission) {
+        Optional<Permission> permissionOptional = permissionRepository.findByName(permission.getName());
+        Optional<Client> optionalClient = clientRepository.findById(id);
+
+        System.out.println(permission.getName());
+
+        if(!permissionOptional.isPresent() || !optionalClient.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Client client = optionalClient.get();
+        client.setPermission(permissionOptional.get());
+
+        return ResponseEntity.ok(new ClientDTO(client));
     }
 
     @CacheEvict(value = "permissionsList", allEntries = true)
