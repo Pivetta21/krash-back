@@ -1,5 +1,7 @@
 package br.pivetta.krash.model;
 
+import br.pivetta.krash.dto.ClientFORM;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,6 +22,12 @@ public class Client {
     private List<CourseRegistration> registrations;
 
     public Client() {
+    }
+
+    public Client(String email, String name, String password) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
     }
 
     public Long getId() {
