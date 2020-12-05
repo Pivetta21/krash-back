@@ -10,7 +10,7 @@ public class ClientFORM {
     public ClientFORM() {
     }
 
-    public Client convert(Client client) {
+    public Client updateClient(Client client) {
         client.setEmail(email);
         client.setName(name);
         client.setPassword(password);

@@ -83,7 +83,7 @@ public class ClientController {
             return ResponseEntity.notFound().build();
         }
 
-        Client client = clientFORM.convert(clientOptional.get());
+        Client client = clientFORM.updateClient(clientOptional.get());
 
         return ResponseEntity.ok(new ClientDTO(client));
     }
@@ -97,7 +97,7 @@ public class ClientController {
             return ResponseEntity.notFound().build();
         }
 
-        Client client = clientFORM.convert(clientOptional.get());
+        Client client = clientFORM.updateClient(clientOptional.get());
 
         return ResponseEntity.ok(new ClientDTO(client));
     }
