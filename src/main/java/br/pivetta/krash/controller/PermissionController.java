@@ -11,8 +11,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -44,11 +42,11 @@ public class PermissionController {
     public ResponseEntity<PermissionDTO> getPermissionById(@PathVariable Long id) {
         Optional<Permission> permission = permissionRepository.findById(id);
 
-        if(permission.isPresent()) {
-            return ResponseEntity.ok(new PermissionDTO(permission.get()));
+        if(permission.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(new PermissionDTO(permission.get()));
     }
 
     @CacheEvict(value = "permissionsList", allEntries = true)
@@ -85,7 +83,7 @@ public class PermissionController {
         Optional<Permission> permissionOptional = permissionRepository.findByName(permissionDTO.getName());
         Optional<Client> optionalClient = clientRepository.findById(id);
 
-        if(!permissionOptional.isPresent() || !optionalClient.isPresent()) {
+        if(permissionOptional.isEmpty() || optionalClient.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -98,7 +96,7 @@ public class PermissionController {
     @CacheEvict(value = "permissionsList", allEntries = true)
     @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> dedeletePermission(@PathVariable Long id) {
+    public ResponseEntity<?> deletePermission(@PathVariable Long id) {
         Optional<Permission> permission = permissionRepository.findById(id);
 
         if (permission.isPresent()) {

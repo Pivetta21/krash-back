@@ -9,8 +9,6 @@ import br.pivetta.krash.repository.PermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,7 +59,7 @@ public class ClientController {
     public ResponseEntity<ClientDTO> createClient(@RequestBody @Valid ClientFORM clientFORM, UriComponentsBuilder uriBuilder) {
         Optional<Permission> permissionOptional = permissionRepository.findByName("USER");
 
-        if(!permissionOptional.isPresent()) {
+        if(permissionOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
@@ -81,7 +79,7 @@ public class ClientController {
     public ResponseEntity<ClientDTO> updateClient(@RequestBody @Valid ClientFORM clientFORM) {
         Optional<Client> clientOptional = clientRepository.findByEmail(clientFORM.getEmail());
 
-        if (!clientOptional.isPresent()) {
+        if (clientOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -95,7 +93,7 @@ public class ClientController {
     public ResponseEntity<ClientDTO> updateClientById(@PathVariable Long id, @RequestBody @Valid ClientFORM clientFORM) {
         Optional<Client> clientOptional = clientRepository.findById(id);
 
-        if (!clientOptional.isPresent()) {
+        if (clientOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -109,7 +107,7 @@ public class ClientController {
     public ResponseEntity<?> deleteClientById(@PathVariable Long id) {
         Optional<Client> clientOptional = clientRepository.findById(id);
 
-        if (!clientOptional.isPresent()) {
+        if (clientOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
