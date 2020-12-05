@@ -1,6 +1,7 @@
 package br.pivetta.krash.controller;
 
 import br.pivetta.krash.dto.ClientDTO;
+import br.pivetta.krash.dto.PermissionDTO;
 import br.pivetta.krash.model.Client;
 import br.pivetta.krash.model.Permission;
 import br.pivetta.krash.repository.ClientRepository;
@@ -31,23 +32,20 @@ public class PermissionController {
 
     @Cacheable(value = "permissionsList")
     @GetMapping
-    public Page<Permission> showPermissions(
-            @RequestParam(required = false) String permissionName,
-            @PageableDefault(sort = "id", direction = Sort.Direction.ASC, page = 0, size = 10) Pageable pageable
-    ) {
+    public Page<PermissionDTO> showPermissions(@RequestParam(required = false) String permissionName, Pageable pageable) {
         if(permissionName != null) {
-            return permissionRepository.findByName(permissionName, pageable);
+            return PermissionDTO.convertPage(permissionRepository.findByName(permissionName, pageable));
         }
 
-        return permissionRepository.findAll(pageable);
+        return PermissionDTO.convertPage(permissionRepository.findAll(pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Permission> getPermissionById(@PathVariable Long id) {
+    public ResponseEntity<PermissionDTO> getPermissionById(@PathVariable Long id) {
         Optional<Permission> permission = permissionRepository.findById(id);
 
         if(permission.isPresent()) {
-            return ResponseEntity.ok(permission.get());
+            return ResponseEntity.ok(new PermissionDTO(permission.get()));
         }
 
         return ResponseEntity.notFound().build();
@@ -56,7 +54,8 @@ public class PermissionController {
     @CacheEvict(value = "permissionsList", allEntries = true)
     @Transactional
     @PostMapping
-    public ResponseEntity<Permission> createPermission(@RequestBody @Valid Permission permission, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<Permission> createPermission(@RequestBody @Valid PermissionDTO permissionDTO, UriComponentsBuilder uriBuilder) {
+        Permission permission = new Permission(permissionDTO.getName());
         permissionRepository.save(permission);
 
         URI uri = uriBuilder.path("/permission/{id}").buildAndExpand(permission.getId()).toUri();
@@ -67,12 +66,12 @@ public class PermissionController {
     @CacheEvict(value = "permissionsList", allEntries = true)
     @Transactional
     @PutMapping("/{id}")
-    public ResponseEntity<Permission> updatePermission(@PathVariable Long id, @RequestBody @Valid Permission updatedPermission) {
+    public ResponseEntity<Permission> updatePermission(@PathVariable Long id, @RequestBody @Valid PermissionDTO permissionDTO) {
         Optional<Permission> permissionOptional = permissionRepository.findById(id);
 
         if (permissionOptional.isPresent()) {
             Permission permission = permissionOptional.get();
-            permission.setName(updatedPermission.getName());
+            permission.setName(permissionDTO.getName());
 
             return ResponseEntity.ok(permission);
         }
@@ -82,11 +81,9 @@ public class PermissionController {
 
     @Transactional
     @PutMapping("/client/{id}")
-    public ResponseEntity<ClientDTO> updateClientPermission(@PathVariable Long id, @RequestBody Permission permission) {
-        Optional<Permission> permissionOptional = permissionRepository.findByName(permission.getName());
+    public ResponseEntity<ClientDTO> updateClientPermission(@PathVariable Long id, @RequestBody PermissionDTO permissionDTO) {
+        Optional<Permission> permissionOptional = permissionRepository.findByName(permissionDTO.getName());
         Optional<Client> optionalClient = clientRepository.findById(id);
-
-        System.out.println(permission.getName());
 
         if(!permissionOptional.isPresent() || !optionalClient.isPresent()) {
             return ResponseEntity.notFound().build();
