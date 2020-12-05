@@ -2,12 +2,13 @@ package br.pivetta.krash.dto;
 
 import br.pivetta.krash.model.Client;
 
-import java.util.Optional;
-
 public class ClientFORM {
     private String email;
     private String name;
     private String password;
+
+    public ClientFORM() {
+    }
 
     public Client convert(Client client) {
         client.setEmail(email);

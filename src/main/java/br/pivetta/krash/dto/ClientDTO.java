@@ -12,6 +12,9 @@ public class ClientDTO {
     private LocalDateTime signUpDate;
     private String permissionName;
 
+    public ClientDTO() {
+    }
+
     public ClientDTO(Client client) {
         this.id = client.getId();
         this.email = client.getEmail();
