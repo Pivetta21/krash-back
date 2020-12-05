@@ -23,6 +23,12 @@ public class Course {
     public Course() {
     }
 
+    public Course(Client client, String name, String description) {
+        this.client = client;
+        this.name = name;
+        this.description = description;
+    }
+
     public Long getId() {
         return id;
     }
