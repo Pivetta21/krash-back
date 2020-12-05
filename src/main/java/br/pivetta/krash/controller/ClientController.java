@@ -31,10 +31,7 @@ public class ClientController {
     private PermissionRepository permissionRepository;
 
     @GetMapping
-    public Page<ClientDTO> showClients(
-            @RequestParam(required = false) String clientName,
-            @PageableDefault(sort = "id", direction = Sort.Direction.ASC, page = 0, size = 10) Pageable pageable
-    ) {
+    public Page<ClientDTO> showClients(@RequestParam(required = false) String clientName, Pageable pageable) {
         Page<Client> clients;
 
         if (clientName != null) {
