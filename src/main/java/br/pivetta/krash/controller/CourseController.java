@@ -84,7 +84,7 @@ public class CourseController {
             return ResponseEntity.notFound().build();
         }
 
-        Course course = courseFORM.updateCourse(courseOptional.get(), clientOptional.get());
+        Course course = courseFORM.updateCourse(courseOptional.get());
 
         return ResponseEntity.ok(new CourseDTO(course));
     }

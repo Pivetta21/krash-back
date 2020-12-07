@@ -1,6 +1,5 @@
 package br.pivetta.krash.dto;
 
-import br.pivetta.krash.model.Client;
 import br.pivetta.krash.model.Course;
 
 public class CourseFORM {
@@ -11,10 +10,9 @@ public class CourseFORM {
     public CourseFORM() {
     }
 
-    public Course updateCourse(Course course, Client client) {
+    public Course updateCourse(Course course) {
         course.setName(name);
         course.setDescription(description);
-        course.setClient(client);
 
         return course;
     }
