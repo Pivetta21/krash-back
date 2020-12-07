@@ -1,6 +1,5 @@
 package br.pivetta.krash.controller;
 
-import br.pivetta.krash.dto.ClientDTO;
 import br.pivetta.krash.dto.CourseDTO;
 import br.pivetta.krash.dto.CourseFORM;
 import br.pivetta.krash.model.Client;

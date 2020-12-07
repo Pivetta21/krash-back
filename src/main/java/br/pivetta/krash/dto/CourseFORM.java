@@ -3,8 +3,6 @@ package br.pivetta.krash.dto;
 import br.pivetta.krash.model.Client;
 import br.pivetta.krash.model.Course;
 
-import java.util.Optional;
-
 public class CourseFORM {
     private String name;
     private String description;

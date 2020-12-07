@@ -1,7 +1,5 @@
 package br.pivetta.krash.model;
 
-import br.pivetta.krash.dto.ClientFORM;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
