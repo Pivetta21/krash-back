@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import java.time.LocalDateTime;
 
 public class CourseDTO {
-    private Long courseId;
+    private Long id;
     private String name;
     private String description;
     private Long creatorId;
@@ -16,7 +16,7 @@ public class CourseDTO {
     }
 
     public CourseDTO(Course course) {
-        this.courseId = course.getId();
+        this.id = course.getId();
         this.name = course.getName();
         this.description = course.getDescription();
         this.creatorId = course.getClient().getId();
@@ -27,8 +27,8 @@ public class CourseDTO {
         return courses.map(CourseDTO::new);
     }
 
-    public Long getCourseId() {
-        return courseId;
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
