@@ -12,6 +12,8 @@ public class CourseRegistration {
     private Client client;
     @ManyToOne
     private Course course;
+    @Enumerated(EnumType.STRING)
+    private CourseStatus courseStatus = CourseStatus.STARTED;
     private BigDecimal rate;
 
     public CourseRegistration() {
@@ -44,6 +46,14 @@ public class CourseRegistration {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public CourseStatus getCourseStatus() {
+        return courseStatus;
+    }
+
+    public void setCourseStatus(CourseStatus courseStatus) {
+        this.courseStatus = courseStatus;
     }
 
     public BigDecimal getRate() {
