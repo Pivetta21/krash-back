@@ -18,6 +18,14 @@ public class Lesson {
     public Lesson() {
     }
 
+    public Lesson(String name, String description, int number, String videoUri, Module module) {
+        this.name = name;
+        this.description = description;
+        this.number = number;
+        this.videoUri = videoUri;
+        this.module = module;
+    }
+
     public Long getId() {
         return id;
     }
