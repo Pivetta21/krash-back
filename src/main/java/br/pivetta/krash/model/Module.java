@@ -18,6 +18,12 @@ public class Module {
     public Module() {
     }
 
+    public Module(String name, int number, Course course) {
+        this.name = name;
+        this.number = number;
+        this.course = course;
+    }
+
     public Long getId() {
         return id;
     }
