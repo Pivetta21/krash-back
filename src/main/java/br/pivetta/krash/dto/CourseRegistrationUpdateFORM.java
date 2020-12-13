@@ -5,11 +5,11 @@ import br.pivetta.krash.model.CourseStatus;
 
 import java.math.BigDecimal;
 
-public class UpdateCourseRegistrationFORM {
+public class CourseRegistrationUpdateFORM {
     private String courseStatus;
     private BigDecimal rate;
 
-    public UpdateCourseRegistrationFORM() {
+    public CourseRegistrationUpdateFORM() {
     }
 
     public CourseRegistration updateRegistration(CourseRegistration courseRegistration) {

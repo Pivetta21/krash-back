@@ -2,14 +2,13 @@ package br.pivetta.krash.controller;
 
 import br.pivetta.krash.dto.CourseRegistrationDTO;
 import br.pivetta.krash.dto.CourseRegistrationFORM;
-import br.pivetta.krash.dto.UpdateCourseRegistrationFORM;
+import br.pivetta.krash.dto.CourseRegistrationUpdateFORM;
 import br.pivetta.krash.model.Client;
 import br.pivetta.krash.model.Course;
 import br.pivetta.krash.model.CourseRegistration;
 import br.pivetta.krash.repository.ClientRepository;
 import br.pivetta.krash.repository.CourseRegistrationRepository;
 import br.pivetta.krash.repository.CourseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -86,7 +85,7 @@ public class CourseRegistrationController {
 
     @Transactional
     @PutMapping("/{id}")
-    public ResponseEntity<CourseRegistrationDTO> createRegistration(@PathVariable Long id, @RequestBody UpdateCourseRegistrationFORM registrationFORM) {
+    public ResponseEntity<CourseRegistrationDTO> createRegistration(@PathVariable Long id, @RequestBody CourseRegistrationUpdateFORM registrationFORM) {
         Optional<CourseRegistration> registrationOptional = courseRegistrationRepository.findById(id);
 
         if (registrationOptional.isEmpty()) {
