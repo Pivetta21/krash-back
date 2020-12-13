@@ -1,6 +1,8 @@
 package br.pivetta.krash.security;
 
+import br.pivetta.krash.repository.ClientRepository;
 import br.pivetta.krash.service.AuthService;
+import br.pivetta.krash.service.TokenService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,14 +14,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     private final AuthService authService;
+    private final TokenService tokenService;
+    private final ClientRepository clientRepository;
 
-    public SecurityConfiguration(AuthService authService) {
+    public SecurityConfigurations(AuthService authService, TokenService tokenService, ClientRepository clientRepository) {
         this.authService = authService;
+        this.tokenService = tokenService;
+        this.clientRepository = clientRepository;
     }
 
     // Configurações de autenticação.
@@ -35,7 +42,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().addFilterBefore(new TokenAuthenticationFilter(tokenService, clientRepository), UsernamePasswordAuthenticationFilter.class);
     }
 
     // Configurações de recursos estáticos.

@@ -28,10 +28,10 @@ public class AuthController {
 
     @PostMapping
     public ResponseEntity<?> auth(@RequestBody @Valid AuthFORM authForm) {
-        UsernamePasswordAuthenticationToken userCredentials = authForm.convertAuthToken();
+        UsernamePasswordAuthenticationToken clientCredentials = authForm.convertAuthToken();
 
         try {
-            Authentication authentication = authenticationManager.authenticate(userCredentials);
+            Authentication authentication = authenticationManager.authenticate(clientCredentials);
             String token = tokenService.generateToken(authentication);
 
             return ResponseEntity.ok(new TokenDTO("Bearer", token));
