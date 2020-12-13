@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "krash.jwt.expiration",
+      "type": "java.lang.Long",
+      "description": "Tempo de expiração do JWT."
+    },
+    {
+      "name": "krash.jwt.secret",
+      "type": "java.lang.String",
+      "description": "Segredo para geração do JWT."
+    }
+  ]
+}
