@@ -1,6 +1,7 @@
 package br.pivetta.krash.dto;
 
 import br.pivetta.krash.model.Client;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class ClientFORM {
     private String email;
@@ -13,7 +14,7 @@ public class ClientFORM {
     public Client updateClient(Client client) {
         client.setEmail(email);
         client.setName(name);
-        client.setPassword(password);
+        client.setPassword(new BCryptPasswordEncoder().encode(password));
 
         return client;
     }

@@ -6,11 +6,11 @@ import br.pivetta.krash.model.Client;
 import br.pivetta.krash.model.Permission;
 import br.pivetta.krash.repository.ClientRepository;
 import br.pivetta.krash.repository.PermissionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -66,7 +66,8 @@ public class ClientController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
-        Client client = new Client(clientFORM.getEmail(), clientFORM.getName(), clientFORM.getPassword());
+        Client client = new Client(clientFORM.getEmail(), clientFORM.getName());
+        client.setPassword(new BCryptPasswordEncoder().encode(clientFORM.getPassword()));
         client.setSignUpDate(LocalDateTime.now());
         client.setPermission(permissionOptional.get());
 
