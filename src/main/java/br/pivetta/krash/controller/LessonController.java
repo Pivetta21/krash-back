@@ -6,7 +6,6 @@ import br.pivetta.krash.model.Lesson;
 import br.pivetta.krash.model.Module;
 import br.pivetta.krash.repository.LessonRepository;
 import br.pivetta.krash.repository.ModuleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +20,13 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/lesson")
 public class LessonController {
-    @Autowired
-    private LessonRepository lessonRepository;
-    @Autowired
-    private ModuleRepository moduleRepository;
+    private final LessonRepository lessonRepository;
+    private final ModuleRepository moduleRepository;
+
+    public LessonController(LessonRepository lessonRepository, ModuleRepository moduleRepository) {
+        this.lessonRepository = lessonRepository;
+        this.moduleRepository = moduleRepository;
+    }
 
     @GetMapping
     public Page<LessonDTO> showLessons(Pageable pageable) {

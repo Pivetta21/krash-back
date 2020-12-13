@@ -1,7 +1,6 @@
 package br.pivetta.krash.controller;
 
 import br.pivetta.krash.model.Error;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -16,8 +15,11 @@ import java.util.List;
 
 @RestControllerAdvice
 public class ErrorHandler {
-    @Autowired
-    MessageSource messageSource;
+    private final MessageSource messageSource;
+
+    public ErrorHandler(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

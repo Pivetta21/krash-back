@@ -18,20 +18,21 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.validation.Valid;
-import java.math.BigDecimal;
 import java.net.URI;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/registration")
 public class CourseRegistrationController {
-    @Autowired
-    private CourseRegistrationRepository courseRegistrationRepository;
-    @Autowired
-    private CourseRepository courseRepository;
-    @Autowired
-    private ClientRepository clientRepository;
+    private final CourseRegistrationRepository courseRegistrationRepository;
+    private final CourseRepository courseRepository;
+    private final ClientRepository clientRepository;
+
+    public CourseRegistrationController(CourseRegistrationRepository courseRegistrationRepository, CourseRepository courseRepository, ClientRepository clientRepository) {
+        this.courseRegistrationRepository = courseRegistrationRepository;
+        this.courseRepository = courseRepository;
+        this.clientRepository = clientRepository;
+    }
 
     @GetMapping
     public Page<CourseRegistrationDTO> showRegistrations(

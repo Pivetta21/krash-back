@@ -6,7 +6,6 @@ import br.pivetta.krash.model.Client;
 import br.pivetta.krash.model.Permission;
 import br.pivetta.krash.repository.ClientRepository;
 import br.pivetta.krash.repository.PermissionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -23,10 +22,13 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/permission")
 public class PermissionController {
-    @Autowired
-    private PermissionRepository permissionRepository;
-    @Autowired
-    private ClientRepository clientRepository;
+    private final PermissionRepository permissionRepository;
+    private final ClientRepository clientRepository;
+
+    public PermissionController(PermissionRepository permissionRepository, ClientRepository clientRepository) {
+        this.permissionRepository = permissionRepository;
+        this.clientRepository = clientRepository;
+    }
 
     @Cacheable(value = "permissionsList")
     @GetMapping

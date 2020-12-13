@@ -23,10 +23,13 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/course")
 public class CourseController {
-    @Autowired
-    private CourseRepository courseRepository;
-    @Autowired
-    ClientRepository clientRepository;
+    private final CourseRepository courseRepository;
+    private final ClientRepository clientRepository;
+
+    public CourseController(CourseRepository courseRepository, ClientRepository clientRepository) {
+        this.courseRepository = courseRepository;
+        this.clientRepository = clientRepository;
+    }
 
     @GetMapping
     public Page<CourseDTO> showCourses(

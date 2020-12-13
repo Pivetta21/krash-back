@@ -6,7 +6,6 @@ import br.pivetta.krash.model.Course;
 import br.pivetta.krash.model.Module;
 import br.pivetta.krash.repository.CourseRepository;
 import br.pivetta.krash.repository.ModuleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +20,13 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/module")
 public class ModuleController {
-    @Autowired
-    private ModuleRepository moduleRepository;
-    @Autowired
-    private CourseRepository courseRepository;
+    private final ModuleRepository moduleRepository;
+    private final CourseRepository courseRepository;
+
+    public ModuleController(ModuleRepository moduleRepository, CourseRepository courseRepository) {
+        this.moduleRepository = moduleRepository;
+        this.courseRepository = courseRepository;
+    }
 
     @GetMapping
     public Page<ModuleDTO> showModules(@RequestParam(required = false) Long courseId, Pageable pageable) {

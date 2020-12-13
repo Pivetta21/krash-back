@@ -23,10 +23,13 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/client")
 public class ClientController {
-    @Autowired
-    private ClientRepository clientRepository;
-    @Autowired
-    private PermissionRepository permissionRepository;
+    private final ClientRepository clientRepository;
+    private final PermissionRepository permissionRepository;
+
+    public ClientController(ClientRepository clientRepository, PermissionRepository permissionRepository) {
+        this.clientRepository = clientRepository;
+        this.permissionRepository = permissionRepository;
+    }
 
     @GetMapping
     public Page<ClientDTO> showClients(@RequestParam(required = false) String clientName, Pageable pageable) {
