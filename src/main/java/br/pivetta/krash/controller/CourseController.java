@@ -58,6 +58,19 @@ public class CourseController {
         return ResponseEntity.ok(new CourseDTO(courseOptional.get()));
     }
 
+    @GetMapping("/modules-count/{id}")
+    public ResponseEntity<?> getModulesCountByCourseId(@PathVariable Long id) {
+        Optional<Course> courseOptional = courseRepository.findById(id);
+
+        if (courseOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        int modulesCount = courseRepository.countModulesByCourseId(id);
+
+        return ResponseEntity.ok(modulesCount);
+    }
+
     @Transactional
     @PostMapping
     public ResponseEntity<CourseDTO> createCourse(@RequestBody @Valid CourseFORM courseFORM, UriComponentsBuilder uriBuilder) {
