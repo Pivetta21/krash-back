@@ -6,7 +6,6 @@ import br.pivetta.krash.model.Client;
 import br.pivetta.krash.model.Course;
 import br.pivetta.krash.repository.ClientRepository;
 import br.pivetta.krash.repository.CourseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -18,6 +17,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -66,7 +67,8 @@ public class CourseController {
             return ResponseEntity.notFound().build();
         }
 
-        int modulesCount = courseRepository.countModulesByCourseId(id);
+        Map<String, Long> modulesCount = new HashMap<>();
+        modulesCount.put("modules-count", courseRepository.countModulesByCourseId(id));
 
         return ResponseEntity.ok(modulesCount);
     }

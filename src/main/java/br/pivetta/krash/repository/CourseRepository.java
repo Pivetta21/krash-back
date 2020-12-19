@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.TypedQuery;
 import java.util.Optional;
 
 @Repository
@@ -20,5 +21,5 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
             " SELECT count(*) FROM course c" +
             " JOIN module m ON c.id = m.course_id AND m.course_id = :courseId",
             nativeQuery = true)
-    int countModulesByCourseId(@Param("courseId") Long courseId);
+    long countModulesByCourseId(@Param("courseId") Long courseId);
 }
