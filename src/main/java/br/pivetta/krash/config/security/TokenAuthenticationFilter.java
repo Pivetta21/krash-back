@@ -1,4 +1,4 @@
-package br.pivetta.krash.security;
+package br.pivetta.krash.config.security;
 
 import br.pivetta.krash.model.Client;
 import br.pivetta.krash.repository.ClientRepository;

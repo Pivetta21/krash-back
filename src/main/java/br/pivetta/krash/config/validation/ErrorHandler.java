@@ -1,4 +1,4 @@
-package br.pivetta.krash.controller;
+package br.pivetta.krash.config.validation;
 
 import br.pivetta.krash.model.Error;
 import org.springframework.context.MessageSource;
