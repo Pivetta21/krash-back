@@ -1,8 +1,8 @@
-package br.pivetta.krash.controller;
+package br.pivetta.krash.config.security;
 
-import br.pivetta.krash.dto.AuthFORM;
-import br.pivetta.krash.dto.TokenDTO;
-import br.pivetta.krash.service.TokenService;
+import br.pivetta.krash.config.security.AuthFORM;
+import br.pivetta.krash.config.security.TokenDTO;
+import br.pivetta.krash.config.security.TokenService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
