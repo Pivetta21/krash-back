@@ -1,4 +1,4 @@
-package br.pivetta.krash.dto;
+package br.pivetta.krash.config.security;
 
 public class TokenDTO {
     private String type;

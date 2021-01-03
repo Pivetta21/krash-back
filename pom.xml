@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.pivetta</groupId>
-	<artifactId>krash</artifactId>
+	<artifactId>krash-back</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>krash</name>
+	<name>krash-back</name>
 	<description>Trabalho Final de POOW2</description>
 
 	<properties>

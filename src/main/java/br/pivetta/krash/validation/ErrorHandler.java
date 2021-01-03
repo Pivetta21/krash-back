@@ -1,6 +1,5 @@
-package br.pivetta.krash.controller;
+package br.pivetta.krash.validation;
 
-import br.pivetta.krash.model.Error;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -23,16 +22,16 @@ public class ErrorHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public List<Error> handleArgumentNotValidException(MethodArgumentNotValidException exception) {
-        List<Error> errors = new ArrayList<>();
+    public List<ErrorDTO> handleArgumentNotValidException(MethodArgumentNotValidException exception) {
+        List<ErrorDTO> errorsDTO = new ArrayList<>();
 
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
         fieldErrors.forEach(error -> {
             String message = messageSource.getMessage(error, LocaleContextHolder.getLocale());
             String field = error.getField();
-            errors.add(new Error(field, message));
+            errorsDTO.add(new ErrorDTO(field, message));
         });
 
-        return errors;
+        return errorsDTO;
     }
 }

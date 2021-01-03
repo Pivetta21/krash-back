@@ -6,7 +6,6 @@ import br.pivetta.krash.model.Client;
 import br.pivetta.krash.model.Course;
 import br.pivetta.krash.repository.ClientRepository;
 import br.pivetta.krash.repository.CourseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -18,6 +17,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -56,6 +57,20 @@ public class CourseController {
         }
 
         return ResponseEntity.ok(new CourseDTO(courseOptional.get()));
+    }
+
+    @GetMapping("/modules-count/{id}")
+    public ResponseEntity<?> getModulesCountByCourseId(@PathVariable Long id) {
+        Optional<Course> courseOptional = courseRepository.findById(id);
+
+        if (courseOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Map<String, Long> modulesCount = new HashMap<>();
+        modulesCount.put("modules-count", courseRepository.countModulesByCourseId(id));
+
+        return ResponseEntity.ok(modulesCount);
     }
 
     @Transactional

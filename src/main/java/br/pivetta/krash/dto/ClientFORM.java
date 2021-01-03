@@ -1,11 +1,17 @@
 package br.pivetta.krash.dto;
 
 import br.pivetta.krash.model.Client;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class ClientFORM {
+    @NotNull @NotEmpty
     private String email;
+    @NotNull @NotEmpty @Length(min = 3)
     private String name;
+    @NotNull @NotEmpty @Length(min = 5)
     private String password;
 
     public ClientFORM() {

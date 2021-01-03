@@ -1,8 +1,6 @@
-package br.pivetta.krash.security;
+package br.pivetta.krash.config.security;
 
 import br.pivetta.krash.repository.ClientRepository;
-import br.pivetta.krash.service.AuthService;
-import br.pivetta.krash.service.TokenService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

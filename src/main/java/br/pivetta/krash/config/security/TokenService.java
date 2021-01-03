@@ -1,4 +1,4 @@
-package br.pivetta.krash.service;
+package br.pivetta.krash.config.security;
 
 import br.pivetta.krash.model.Client;
 import io.jsonwebtoken.Claims;

@@ -1,8 +1,7 @@
-package br.pivetta.krash.security;
+package br.pivetta.krash.config.security;
 
 import br.pivetta.krash.model.Client;
 import br.pivetta.krash.repository.ClientRepository;
-import br.pivetta.krash.service.TokenService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
