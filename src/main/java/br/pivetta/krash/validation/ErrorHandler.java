@@ -1,4 +1,4 @@
-package br.pivetta.krash.config.validation;
+package br.pivetta.krash.validation;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;

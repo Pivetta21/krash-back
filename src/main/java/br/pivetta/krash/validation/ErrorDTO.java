@@ -1,4 +1,4 @@
-package br.pivetta.krash.config.validation;
+package br.pivetta.krash.validation;
 
 public class ErrorDTO {
     private String field;
