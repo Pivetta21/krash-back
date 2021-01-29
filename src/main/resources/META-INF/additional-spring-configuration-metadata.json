@@ -9,6 +9,11 @@
       "name": "krash.jwt.secret",
       "type": "java.lang.String",
       "description": "Segredo para geração do JWT."
+    },
+    {
+      "name": "krash.cors.origin",
+      "type": "java.lang.String",
+      "description": "Origin permitida para a configuração do CORS."
     }
   ]
 }
