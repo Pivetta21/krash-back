@@ -32,9 +32,13 @@ public class AuthController {
     public ResponseEntity<ClientDTO> getAuthenticatedClient(@RequestHeader("Authorization") String authorizationHeader) {
         String token = tokenService.parseToken(authorizationHeader);
 
-        Client client = this.clientRepository.getOne(tokenService.getClientIdFromToken(token));
+        if (tokenService.isTokenValid(token)) {
+            Client client = this.clientRepository.getOne(tokenService.getClientIdFromToken(token));
 
-        return ResponseEntity.ok(new ClientDTO(client));
+            return ResponseEntity.ok(new ClientDTO(client));
+        }
+
+        return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/is-token-valid")
