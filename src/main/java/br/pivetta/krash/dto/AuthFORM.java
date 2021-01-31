@@ -1,4 +1,4 @@
-package br.pivetta.krash.config.security;
+package br.pivetta.krash.dto;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 

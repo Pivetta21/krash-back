@@ -1,5 +1,8 @@
-package br.pivetta.krash.config.security;
+package br.pivetta.krash.controller;
 
+import br.pivetta.krash.config.security.TokenDTO;
+import br.pivetta.krash.dto.AuthFORM;
+import br.pivetta.krash.service.TokenService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,7 +24,7 @@ public class AuthController {
     }
 
     @PostMapping
-    public ResponseEntity<?> auth(@RequestBody @Valid AuthFORM authForm) {
+    public ResponseEntity<TokenDTO> auth(@RequestBody @Valid AuthFORM authForm) {
         UsernamePasswordAuthenticationToken clientCredentials = authForm.convertAuthToken();
 
         try {
