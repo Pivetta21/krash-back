@@ -28,6 +28,22 @@ public class AuthController {
         this.clientRepository = clientRepository;
     }
 
+    @GetMapping("/client")
+    public ResponseEntity<ClientDTO> getAuthenticatedClient(@RequestHeader("Authorization") String authorizationHeader) {
+        String token = tokenService.parseToken(authorizationHeader);
+
+        Client client = this.clientRepository.getOne(tokenService.getClientIdFromToken(token));
+
+        return ResponseEntity.ok(new ClientDTO(client));
+    }
+
+    @GetMapping("/is-token-valid")
+    public boolean isTokenValid(@RequestHeader("Authorization") String authorizationHeader) {
+        String token = tokenService.parseToken(authorizationHeader);
+
+        return tokenService.isTokenValid(token);
+    }
+
     @PostMapping
     public ResponseEntity<AuthDTO> auth(@RequestBody @Valid AuthFORM authForm) {
         UsernamePasswordAuthenticationToken clientCredentials = authForm.convertAuthToken();
@@ -36,10 +52,7 @@ public class AuthController {
             Authentication authentication = authenticationManager.authenticate(clientCredentials);
             String token = tokenService.generateToken(authentication);
 
-            Client client = this.clientRepository.getOne(tokenService.getClientIdFromToken(token));
-            AuthDTO authenticatedClient = new AuthDTO(new ClientDTO(client), token);
-
-            return ResponseEntity.ok(authenticatedClient);
+            return ResponseEntity.ok(new AuthDTO(token));
         } catch (AuthenticationException e) {
             return ResponseEntity.badRequest().build();
         }

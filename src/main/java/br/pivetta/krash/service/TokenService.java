@@ -45,4 +45,12 @@ public class TokenService {
 
         return Long.parseLong(claims.getSubject());
     }
+
+    public String parseToken(String token) {
+        if (token == null || token.isEmpty() || !token.startsWith("Bearer ")) {
+            return null;
+        }
+
+        return token.substring(7, token.length());
+    }
 }
