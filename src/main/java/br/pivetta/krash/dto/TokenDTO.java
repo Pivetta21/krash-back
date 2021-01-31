@@ -1,9 +1,9 @@
 package br.pivetta.krash.dto;
 
-public class AuthDTO {
+public class TokenDTO {
     private String token;
 
-    public AuthDTO(String token) {
+    public TokenDTO(String token) {
         this.token = token;
     }
 

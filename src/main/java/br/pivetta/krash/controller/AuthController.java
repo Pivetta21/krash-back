@@ -1,6 +1,6 @@
 package br.pivetta.krash.controller;
 
-import br.pivetta.krash.dto.AuthDTO;
+import br.pivetta.krash.dto.TokenDTO;
 import br.pivetta.krash.dto.AuthFORM;
 import br.pivetta.krash.dto.ClientDTO;
 import br.pivetta.krash.model.Client;
@@ -45,14 +45,14 @@ public class AuthController {
     }
 
     @PostMapping
-    public ResponseEntity<AuthDTO> auth(@RequestBody @Valid AuthFORM authForm) {
+    public ResponseEntity<TokenDTO> auth(@RequestBody @Valid AuthFORM authForm) {
         UsernamePasswordAuthenticationToken clientCredentials = authForm.convertAuthToken();
 
         try {
             Authentication authentication = authenticationManager.authenticate(clientCredentials);
             String token = tokenService.generateToken(authentication);
 
-            return ResponseEntity.ok(new AuthDTO(token));
+            return ResponseEntity.ok(new TokenDTO(token));
         } catch (AuthenticationException e) {
             return ResponseEntity.badRequest().build();
         }
