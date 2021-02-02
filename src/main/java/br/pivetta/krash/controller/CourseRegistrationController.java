@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
@@ -76,6 +77,7 @@ public class CourseRegistrationController {
         }
 
         CourseRegistration registration = new CourseRegistration(clientOptional.get(), courseOptional.get());
+        registration.setRegisteredAt(LocalDateTime.now());
         courseRegistrationRepository.save(registration);
 
         URI uri = uriBuilder.path("/registration/{id}").buildAndExpand(registration.getId()).toUri();

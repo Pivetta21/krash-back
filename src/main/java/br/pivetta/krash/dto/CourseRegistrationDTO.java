@@ -5,10 +5,13 @@ import br.pivetta.krash.model.CourseStatus;
 import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class CourseRegistrationDTO {
-    private Long clientId;
+    private Long studentId;
     private Long courseId;
+    private LocalDateTime registered_at;
+    private LocalDateTime finished_at;
     private CourseStatus courseStatus;
     private BigDecimal rate;
 
@@ -16,8 +19,10 @@ public class CourseRegistrationDTO {
     }
 
     public CourseRegistrationDTO(CourseRegistration courseRegistration) {
-        this.clientId = courseRegistration.getClient().getId();
+        this.studentId = courseRegistration.getClient().getId();
         this.courseId = courseRegistration.getCourse().getId();
+        this.registered_at = courseRegistration.getRegisteredAt();
+        this.finished_at = courseRegistration.getFinishedAt();
         this.courseStatus = courseRegistration.getCourseStatus();
         this.rate = courseRegistration.getRate();
     }
@@ -27,11 +32,19 @@ public class CourseRegistrationDTO {
     }
 
     public Long getStudentId() {
-        return clientId;
+        return studentId;
     }
 
     public Long getCourseId() {
         return courseId;
+    }
+
+    public LocalDateTime getRegistered_at() {
+        return registered_at;
+    }
+
+    public LocalDateTime getFinished_at() {
+        return finished_at;
     }
 
     public CourseStatus getCourseStatus() {
