@@ -2,6 +2,7 @@ package br.pivetta.krash.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 public class CourseRegistration {
@@ -14,6 +15,8 @@ public class CourseRegistration {
     private Course course;
     @Enumerated(EnumType.STRING)
     private CourseStatus courseStatus = CourseStatus.STARTED;
+    private LocalDateTime registeredAt;
+    private LocalDateTime finishedAt;
     private BigDecimal rate;
 
     public CourseRegistration() {
@@ -54,6 +57,22 @@ public class CourseRegistration {
 
     public void setCourseStatus(CourseStatus courseStatus) {
         this.courseStatus = courseStatus;
+    }
+
+    public LocalDateTime getRegisteredAt() {
+        return registeredAt;
+    }
+
+    public void setRegisteredAt(LocalDateTime registeredAt) {
+        this.registeredAt = registeredAt;
+    }
+
+    public LocalDateTime getFinishedAt() {
+        return finishedAt;
+    }
+
+    public void setFinishedAt(LocalDateTime finishedAt) {
+        this.finishedAt = finishedAt;
     }
 
     public BigDecimal getRate() {

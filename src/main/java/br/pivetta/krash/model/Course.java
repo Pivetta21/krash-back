@@ -10,7 +10,7 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private Client client;
+    private Channel channel;
     private String name;
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -23,8 +23,8 @@ public class Course {
     public Course() {
     }
 
-    public Course(Client client, String name, String description) {
-        this.client = client;
+    public Course(Channel channel, String name, String description) {
+        this.channel = channel;
         this.name = name;
         this.description = description;
     }
@@ -37,12 +37,12 @@ public class Course {
         this.id = id;
     }
 
-    public Client getClient() {
-        return client;
+    public Channel getChannel() {
+        return channel;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setChannel(Channel channel) {
+        this.channel = channel;
     }
 
     public String getName() {

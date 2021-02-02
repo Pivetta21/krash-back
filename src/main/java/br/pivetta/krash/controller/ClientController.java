@@ -63,7 +63,7 @@ public class ClientController {
         Optional<Permission> permissionOptional = permissionRepository.findByName("USER");
 
         if(permissionOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
         Client client = new Client(clientFORM.getEmail(), clientFORM.getName());

@@ -9,7 +9,7 @@ public class CourseDTO {
     private Long id;
     private String name;
     private String description;
-    private Long creatorId;
+    private Long channelId;
     private LocalDateTime createdAt;
 
     public CourseDTO() {
@@ -19,7 +19,7 @@ public class CourseDTO {
         this.id = course.getId();
         this.name = course.getName();
         this.description = course.getDescription();
-        this.creatorId = course.getClient().getId();
+        this.channelId = course.getChannel().getId();
         this.createdAt = course.getCreatedAt();
     }
 
@@ -39,8 +39,8 @@ public class CourseDTO {
         return description;
     }
 
-    public Long getCreatorId() {
-        return creatorId;
+    public Long getChannelId() {
+        return channelId;
     }
 
     public LocalDateTime getCreatedAt() {
