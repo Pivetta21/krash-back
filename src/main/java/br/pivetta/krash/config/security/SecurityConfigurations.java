@@ -44,7 +44,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .antMatchers("/permission", "/permission/*").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.POST, "/client").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
-                .antMatchers(HttpMethod.GET, "/auth/*").permitAll()
+                .antMatchers(HttpMethod.GET, "/auth/is-token-valid").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
