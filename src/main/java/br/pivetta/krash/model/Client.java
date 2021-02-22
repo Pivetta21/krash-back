@@ -18,6 +18,7 @@ public class Client implements UserDetails {
     private String email;
     private String name;
     private String password;
+    private String pictureUrl;
     private LocalDateTime signUpDate;
     @ManyToOne
     private Permission permission;
@@ -95,6 +96,14 @@ public class Client implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 
     public LocalDateTime getSignUpDate() {
