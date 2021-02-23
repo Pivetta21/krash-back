@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 public class ClientFORM {
     @NotNull @NotEmpty
     private String email;
+    @NotNull @NotEmpty
+    private String picture;
     @NotNull @NotEmpty @Length(min = 3)
     private String name;
     @NotNull @NotEmpty @Length(min = 5)
@@ -21,6 +23,7 @@ public class ClientFORM {
         client.setEmail(email);
         client.setName(name);
         client.setPassword(new BCryptPasswordEncoder().encode(password));
+        client.setPicture(picture);
 
         return client;
     }
@@ -31,6 +34,14 @@ public class ClientFORM {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.picture = pictureUrl;
     }
 
     public String getName() {

@@ -9,7 +9,7 @@ public class ClientDTO {
     private Long id;
     private String email;
     private String name;
-    private String pictureUrl;
+    private String picture;
     private LocalDateTime signUpDate;
     private String permissionName;
 
@@ -20,7 +20,7 @@ public class ClientDTO {
         this.id = client.getId();
         this.email = client.getEmail();
         this.name = client.getName();
-        this.pictureUrl = client.getPictureUrl();
+        this.picture = client.getPicture();
         this.signUpDate = client.getSignUpDate();
         this.permissionName = client.getPermission().getName();
     }
@@ -41,8 +41,8 @@ public class ClientDTO {
         return name;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    public String getPicture() {
+        return picture;
     }
 
     public LocalDateTime getSignUpDate() {

@@ -67,6 +67,7 @@ public class ClientController {
         }
 
         Client client = new Client(clientFORM.getEmail(), clientFORM.getName());
+        client.setPicture(clientFORM.getPicture());
         client.setPassword(new BCryptPasswordEncoder().encode(clientFORM.getPassword()));
         client.setSignUpDate(LocalDateTime.now());
         client.setPermission(permissionOptional.get());
