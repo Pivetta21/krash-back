@@ -1,8 +1,6 @@
 package br.pivetta.krash.dto;
 
-import br.pivetta.krash.model.Client;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -26,25 +24,6 @@ public class ClientFORM {
     public ClientFORM() {
     }
 
-    public Client updateClient(Client client) {
-        client.setName(name);
-        client.setEmail(email);
-
-        if (!picture.isBlank() && !picture.isEmpty() && !client.getPicture().equals(picture)) {
-            client.setPicture(picture);
-        }
-
-        if (!password.isEmpty() && !password.isBlank()) {
-            String newPassword = new BCryptPasswordEncoder().encode(password);
-
-            if (!client.getPassword().equals(newPassword)) {
-                client.setPassword(newPassword);
-            }
-        }
-
-        return client;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -57,8 +36,8 @@ public class ClientFORM {
         return picture;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.picture = pictureUrl;
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
     public String getName() {

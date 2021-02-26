@@ -2,6 +2,7 @@ package br.pivetta.krash.controller;
 
 import br.pivetta.krash.dto.ClientDTO;
 import br.pivetta.krash.dto.ClientFORM;
+import br.pivetta.krash.dto.ClientUpdateFORM;
 import br.pivetta.krash.model.Client;
 import br.pivetta.krash.model.Permission;
 import br.pivetta.krash.repository.ClientRepository;
@@ -86,8 +87,10 @@ public class ClientController {
 
     @Transactional
     @PutMapping
-    public ResponseEntity<ClientDTO> updateClient(@RequestBody @Valid ClientFORM clientFORM, @RequestHeader("Authorization") String authorizationHeader) {
-        Optional<Client> clientOptional = clientRepository.findByEmail(clientFORM.getEmail());
+    public ResponseEntity<ClientDTO> updateClient(@RequestBody ClientUpdateFORM clientUpdateFORM,
+                                                  @RequestHeader("Authorization") String authorizationHeader
+    ) {
+        Optional<Client> clientOptional = clientRepository.findByEmail(clientUpdateFORM.getEmail());
 
         if (clientOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -101,25 +104,27 @@ public class ClientController {
 
         Client clientAuthenticated = this.clientRepository.getOne(tokenService.getClientIdFromToken(token));
 
-        if (!clientAuthenticated.getEmail().equals(clientFORM.getEmail())) {
+        if (!clientAuthenticated.getEmail().equals(clientUpdateFORM.getEmail())) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
-        Client client = clientFORM.updateClient(clientOptional.get());
+        Client client = clientUpdateFORM.updateClient(clientOptional.get());
 
         return ResponseEntity.ok(new ClientDTO(client));
     }
 
     @Transactional
     @PutMapping("/{id}")
-    public ResponseEntity<ClientDTO> updateClientById(@PathVariable Long id, @RequestBody @Valid ClientFORM clientFORM) {
+    public ResponseEntity<ClientDTO> updateClientById(@PathVariable Long id,
+                                                      @RequestBody ClientUpdateFORM clientUpdateFORM
+    ) {
         Optional<Client> clientOptional = clientRepository.findById(id);
 
         if (clientOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        Client client = clientFORM.updateClient(clientOptional.get());
+        Client client = clientUpdateFORM.updateClient(clientOptional.get());
 
         return ResponseEntity.ok(new ClientDTO(client));
     }

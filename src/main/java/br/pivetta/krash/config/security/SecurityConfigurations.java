@@ -43,6 +43,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/permission", "/permission/*").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.POST, "/client").permitAll()
+                .antMatchers(HttpMethod.PUT, "/client/*").hasAnyAuthority("ADMIN", "STAFF")
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers(HttpMethod.GET, "/auth/is-token-valid").permitAll()
                 .antMatchers(HttpMethod.GET, "/file/download/*").permitAll()
