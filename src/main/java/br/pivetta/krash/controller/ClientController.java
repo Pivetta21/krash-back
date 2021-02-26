@@ -6,6 +6,7 @@ import br.pivetta.krash.model.Client;
 import br.pivetta.krash.model.Permission;
 import br.pivetta.krash.repository.ClientRepository;
 import br.pivetta.krash.repository.PermissionRepository;
+import br.pivetta.krash.service.TokenService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -25,10 +26,14 @@ import java.util.Optional;
 public class ClientController {
     private final ClientRepository clientRepository;
     private final PermissionRepository permissionRepository;
+    private final TokenService tokenService;
 
-    public ClientController(ClientRepository clientRepository, PermissionRepository permissionRepository) {
+    public ClientController(
+            ClientRepository clientRepository, PermissionRepository permissionRepository, TokenService tokenService
+    ) {
         this.clientRepository = clientRepository;
         this.permissionRepository = permissionRepository;
+        this.tokenService = tokenService;
     }
 
     @GetMapping
@@ -62,7 +67,7 @@ public class ClientController {
     public ResponseEntity<ClientDTO> createClient(@RequestBody @Valid ClientFORM clientFORM, UriComponentsBuilder uriBuilder) {
         Optional<Permission> permissionOptional = permissionRepository.findByName("USER");
 
-        if(permissionOptional.isEmpty()) {
+        if (permissionOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
@@ -81,11 +86,23 @@ public class ClientController {
 
     @Transactional
     @PutMapping
-    public ResponseEntity<ClientDTO> updateClient(@RequestBody @Valid ClientFORM clientFORM) {
+    public ResponseEntity<ClientDTO> updateClient(@RequestBody @Valid ClientFORM clientFORM, @RequestHeader("Authorization") String authorizationHeader) {
         Optional<Client> clientOptional = clientRepository.findByEmail(clientFORM.getEmail());
 
         if (clientOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
+        }
+
+        String token = tokenService.parseToken(authorizationHeader);
+
+        if (!tokenService.isTokenValid(token)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Client clientAuthenticated = this.clientRepository.getOne(tokenService.getClientIdFromToken(token));
+
+        if (!clientAuthenticated.getEmail().equals(clientFORM.getEmail())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
         Client client = clientFORM.updateClient(clientOptional.get());

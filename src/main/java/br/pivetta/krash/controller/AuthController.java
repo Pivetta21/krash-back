@@ -19,8 +19,8 @@ import javax.validation.Valid;
 @RequestMapping("/auth")
 public class AuthController {
     private final AuthenticationManager authenticationManager;
-    private final TokenService tokenService;
     private final ClientRepository clientRepository;
+    private final TokenService tokenService;
 
     public AuthController(AuthenticationManager authenticationManager, TokenService tokenService, ClientRepository clientRepository) {
         this.authenticationManager = authenticationManager;
