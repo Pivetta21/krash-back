@@ -42,7 +42,7 @@ public class FileStorageService {
 
         try {
             // Check if the file's name contains invalid characters
-            if(fileName.contains("..")) {
+            if (fileName.contains("..")) {
                 throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
             }
 
@@ -60,13 +60,27 @@ public class FileStorageService {
         try {
             Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
-            if(resource.exists()) {
+            if (resource.exists()) {
                 return resource;
             } else {
                 throw new MyFileNotFoundException("File not found " + fileName);
             }
         } catch (MalformedURLException ex) {
             throw new MyFileNotFoundException("File not found " + fileName, ex);
+        }
+    }
+
+    public void deleteFile(String fileName) {
+        try {
+            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+
+            if (Files.exists(filePath)) {
+                Files.delete(filePath);
+            } else {
+                throw new MyFileNotFoundException("File not found: " + fileName);
+            }
+        } catch (IOException ex) {
+            throw new MyFileNotFoundException("File not found: " + fileName, ex);
         }
     }
 }

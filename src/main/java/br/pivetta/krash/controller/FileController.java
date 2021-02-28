@@ -24,17 +24,7 @@ public class FileController {
         this.fileStorageService = fileStorageService;
     }
 
-    @PostMapping("/upload")
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file, UriComponentsBuilder uriBuilder) {
-        String fileName = fileStorageService.storeFile(file);
-
-        String fileDownloadUri = uriBuilder.path("/file/download/").path(fileName).toUriString();
-
-
-        return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
-    }
-
-    @GetMapping("/download/{fileName:.+}")
+    @GetMapping("/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         // Load file as Resource
         Resource resource = fileStorageService.loadFileAsResource(fileName);
@@ -56,5 +46,19 @@ public class FileController {
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
+    }
+
+    @PostMapping("/upload")
+    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file, UriComponentsBuilder uriBuilder) {
+        String fileName = fileStorageService.storeFile(file);
+
+        String fileDownloadUri = uriBuilder.path("/file/").path(fileName).toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
+    }
+
+    @DeleteMapping("/{fileName:.+}")
+    public void deleteFile(@PathVariable String fileName) {
+        fileStorageService.deleteFile(fileName);
     }
 }
