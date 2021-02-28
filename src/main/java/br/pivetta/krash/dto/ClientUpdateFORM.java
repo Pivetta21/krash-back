@@ -13,16 +13,12 @@ public class ClientUpdateFORM {
     }
 
     public Client updateClient(Client client) {
-        if (!name.isBlank() && !name.isEmpty() && !client.getName().equals(name)) {
-            client.setName(name);
-        }
-
-        if (!email.isBlank() && !email.isEmpty() && !client.getEmail().equals(email)) {
-            client.setEmail(email);
-        }
-
         if (!picture.isBlank() && !picture.isEmpty() && !client.getPicture().equals(picture)) {
             client.setPicture(picture);
+        }
+
+        if (!name.isBlank() && !name.isEmpty() && !client.getName().equals(name)) {
+            client.setName(name);
         }
 
         if (!password.isEmpty() && !password.isBlank()) {
@@ -38,10 +34,6 @@ public class ClientUpdateFORM {
 
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPicture() {
