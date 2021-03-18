@@ -2,9 +2,10 @@ package br.pivetta.krash.controller;
 
 import br.pivetta.krash.dto.CourseDTO;
 import br.pivetta.krash.dto.CourseFORM;
-import br.pivetta.krash.model.Channel;
+import br.pivetta.krash.model.Client;
 import br.pivetta.krash.model.Course;
-import br.pivetta.krash.repository.ChannelRepository;
+
+import br.pivetta.krash.repository.ClientRepository;
 import br.pivetta.krash.repository.CourseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,11 +26,11 @@ import java.util.Optional;
 @RequestMapping("/course")
 public class CourseController {
     private final CourseRepository courseRepository;
-    private final ChannelRepository channelRepository;
+    private final ClientRepository clientRepository;
 
-    public CourseController(CourseRepository courseRepository, ChannelRepository channelRepository) {
+    public CourseController(CourseRepository courseRepository, ClientRepository clientRepository) {
         this.courseRepository = courseRepository;
-        this.channelRepository = channelRepository;
+        this.clientRepository = clientRepository;
     }
 
     @GetMapping
@@ -76,13 +77,13 @@ public class CourseController {
     @Transactional
     @PostMapping
     public ResponseEntity<CourseDTO> createCourse(@RequestBody @Valid CourseFORM courseFORM, UriComponentsBuilder uriBuilder) {
-        Optional<Channel> channel = channelRepository.findById(courseFORM.getChannelId());
+        Optional<Client> clientOptional = clientRepository.findById(courseFORM.getClientId());
 
-        if (channel.isEmpty()) {
+        if (clientOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        Course course = new Course(channel.get(), courseFORM.getName(), courseFORM.getDescription());
+        Course course = new Course(clientOptional.get(), courseFORM.getName(), courseFORM.getDescription());
         course.setCreatedAt(LocalDateTime.now());
 
         URI uri = uriBuilder.path("/course/{id}").buildAndExpand(course.getId()).toUri();
@@ -96,9 +97,9 @@ public class CourseController {
     @PutMapping("/{id}")
     public ResponseEntity<CourseDTO> updateCourse(@PathVariable Long id, @RequestBody @Valid CourseFORM courseFORM) {
         Optional<Course> courseOptional = courseRepository.findById(id);
-        Optional<Channel> channelOptional = channelRepository.findById(courseFORM.getChannelId());
+        Optional<Client> clientOptional = clientRepository.findById(courseFORM.getClientId());
 
-        if (courseOptional.isEmpty() || channelOptional.isEmpty()) {
+        if (courseOptional.isEmpty() || clientOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 

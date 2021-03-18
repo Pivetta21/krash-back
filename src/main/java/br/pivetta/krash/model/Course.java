@@ -9,9 +9,9 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    private Channel channel;
     private String name;
+    @ManyToOne
+    Client client;
     @Column(columnDefinition = "TEXT")
     private String description;
     private LocalDateTime createdAt;
@@ -23,8 +23,8 @@ public class Course {
     public Course() {
     }
 
-    public Course(Channel channel, String name, String description) {
-        this.channel = channel;
+    public Course(Client client, String name, String description) {
+        this.client = client;
         this.name = name;
         this.description = description;
     }
@@ -35,14 +35,6 @@ public class Course {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Channel getChannel() {
-        return channel;
-    }
-
-    public void setChannel(Channel channel) {
-        this.channel = channel;
     }
 
     public String getName() {
@@ -83,5 +75,13 @@ public class Course {
 
     public void setModules(List<Module> modules) {
         this.modules = modules;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }
