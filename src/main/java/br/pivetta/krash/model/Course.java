@@ -19,14 +19,16 @@ public class Course {
     private List<CourseRegistration> registrations;
     @OneToMany(mappedBy = "course")
     private List<Module> modules;
+    private String picture;
 
     public Course() {
     }
 
-    public Course(Client client, String name, String description) {
+    public Course(Client client, String name, String description, String picture) {
         this.client = client;
         this.name = name;
         this.description = description;
+        this.picture = picture;
     }
 
     public Long getId() {
@@ -83,5 +85,13 @@ public class Course {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 }

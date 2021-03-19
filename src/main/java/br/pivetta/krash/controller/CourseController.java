@@ -34,14 +34,14 @@ public class CourseController {
     }
 
     @GetMapping
-    public Page<CourseDTO> showCourses(
-            @RequestParam(required = false) String courseName,
-            @PageableDefault(sort = "name") Pageable pageable
+    public Page<CourseDTO> getCourses(
+            @RequestParam(required = false) Long clientId,
+            @PageableDefault(sort = "id") Pageable pageable
     ) {
         Page<Course> courses;
 
-        if (courseName != null) {
-            courses = courseRepository.findByName(courseName, pageable);
+        if (clientId != null) {
+            courses = courseRepository.findAllByClientId(clientId, pageable);
         } else {
             courses = courseRepository.findAll(pageable);
         }
@@ -83,7 +83,7 @@ public class CourseController {
             return ResponseEntity.notFound().build();
         }
 
-        Course course = new Course(clientOptional.get(), courseFORM.getName(), courseFORM.getDescription());
+        Course course = new Course(clientOptional.get(), courseFORM.getName(), courseFORM.getDescription(), courseFORM.getPicture());
         course.setCreatedAt(LocalDateTime.now());
 
         URI uri = uriBuilder.path("/course/{id}").buildAndExpand(course.getId()).toUri();

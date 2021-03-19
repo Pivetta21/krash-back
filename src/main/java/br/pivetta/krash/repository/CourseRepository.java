@@ -13,13 +13,14 @@ import java.util.Optional;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
-    Page<Course> findByName(String courseName, Pageable pageable);
+    Page<Course> findAllByName(String courseName, Pageable pageable);
+
+    Page<Course> findAllByClientId(Long id, Pageable pageable);
 
     Optional<Course> findByName(String courseName);
 
     @Query(value =
             " SELECT count(*) FROM course c" +
-            " JOIN module m ON c.id = m.course_id AND m.course_id = :courseId",
-            nativeQuery = true)
+            " JOIN module m ON c.id = m.course_id AND m.course_id = :courseId", nativeQuery = true)
     long countModulesByCourseId(@Param("courseId") Long courseId);
 }

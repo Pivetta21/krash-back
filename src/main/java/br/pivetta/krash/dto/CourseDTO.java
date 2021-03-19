@@ -10,6 +10,7 @@ public class CourseDTO {
     private String name;
     private String description;
     private Long clientId;
+    private String picture;
     private LocalDateTime createdAt;
 
     public CourseDTO() {
@@ -21,6 +22,7 @@ public class CourseDTO {
         this.description = course.getDescription();
         this.clientId = course.getClient().getId();
         this.createdAt = course.getCreatedAt();
+        this.picture = course.getPicture();
     }
 
     public static Page<CourseDTO> convertPage(Page<Course> courses) {
@@ -41,6 +43,10 @@ public class CourseDTO {
 
     public Long getClientId() {
         return clientId;
+    }
+
+    public String getPicture() {
+        return picture;
     }
 
     public LocalDateTime getCreatedAt() {
