@@ -18,8 +18,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -60,18 +58,15 @@ public class CourseController {
         return ResponseEntity.ok(new CourseDTO(courseOptional.get()));
     }
 
-    @GetMapping("/modules-count/{id}")
-    public ResponseEntity<?> getModulesCountByCourseId(@PathVariable Long id) {
+    @GetMapping("/content-count/{id}")
+    public ResponseEntity<?> getContentCountByCourseId(@PathVariable Long id) {
         Optional<Course> courseOptional = courseRepository.findById(id);
 
         if (courseOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        Map<String, Long> modulesCount = new HashMap<>();
-        modulesCount.put("modules-count", courseRepository.countModulesByCourseId(id));
-
-        return ResponseEntity.ok(modulesCount);
+        return ResponseEntity.ok(courseRepository.contentCountByCourseId(id));
     }
 
     @Transactional
