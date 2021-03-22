@@ -29,7 +29,7 @@ public class ModuleController {
     }
 
     @GetMapping
-    public Page<ModuleDTO> showModules(@RequestParam(required = false) Long courseId, Pageable pageable) {
+    public Page<ModuleDTO> getModules(@RequestParam(required = false) Long courseId, Pageable pageable) {
         Page<Module> modules;
 
         if (courseId != null) {

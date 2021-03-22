@@ -29,7 +29,7 @@ public class LessonController {
     }
 
     @GetMapping
-    public Page<LessonDTO> showLessons(Pageable pageable) {
+    public Page<LessonDTO> getLessons(Pageable pageable) {
         Page<Lesson> lessons = lessonRepository.findAll(pageable);
 
         return LessonDTO.convertPage(lessons);

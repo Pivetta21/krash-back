@@ -35,7 +35,7 @@ public class CourseRegistrationController {
     }
 
     @GetMapping
-    public Page<CourseRegistrationDTO> showRegistrations(
+    public Page<CourseRegistrationDTO> getRegistrations(
             @RequestParam(required = false) Long clientId,
             @RequestParam(required = false) Long courseId,
             @PageableDefault(sort = "id") Pageable pageable

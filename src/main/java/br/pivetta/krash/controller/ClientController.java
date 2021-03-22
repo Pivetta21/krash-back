@@ -38,7 +38,7 @@ public class ClientController {
     }
 
     @GetMapping
-    public Page<ClientDTO> showClients(@RequestParam(required = false) String clientName, Pageable pageable) {
+    public Page<ClientDTO> getClients(@RequestParam(required = false) String clientName, Pageable pageable) {
         Page<Client> clients;
 
         if (clientName != null) {
