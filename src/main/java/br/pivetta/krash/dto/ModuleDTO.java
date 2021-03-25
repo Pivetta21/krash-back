@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 
 public class ModuleDTO {
     private Long id;
+    private Long courseId;
     private String name;
     private int number;
 
@@ -13,6 +14,7 @@ public class ModuleDTO {
 
     public ModuleDTO(Module module) {
         this.id = module.getId();
+        this.courseId = module.getCourse().getId();
         this.name = module.getName();
         this.number = module.getNumber();
     }
@@ -23,6 +25,10 @@ public class ModuleDTO {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getCourseId() {
+        return courseId;
     }
 
     public String getName() {
