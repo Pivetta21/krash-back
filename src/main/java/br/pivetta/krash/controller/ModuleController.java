@@ -8,6 +8,7 @@ import br.pivetta.krash.repository.CourseRepository;
 import br.pivetta.krash.repository.ModuleRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class ModuleController {
     }
 
     @GetMapping
-    public Page<ModuleDTO> showModules(@RequestParam(required = false) Long courseId, Pageable pageable) {
+    public Page<ModuleDTO> getModules(@RequestParam(required = false) Long courseId, @PageableDefault(sort = { "number"}) Pageable pageable) {
         Page<Module> modules;
 
         if (courseId != null) {

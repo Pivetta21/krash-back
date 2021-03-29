@@ -9,7 +9,8 @@ public class CourseDTO {
     private Long id;
     private String name;
     private String description;
-    private Long channelId;
+    private Long clientId;
+    private String picture;
     private LocalDateTime createdAt;
 
     public CourseDTO() {
@@ -19,8 +20,9 @@ public class CourseDTO {
         this.id = course.getId();
         this.name = course.getName();
         this.description = course.getDescription();
-        this.channelId = course.getChannel().getId();
+        this.clientId = course.getClient().getId();
         this.createdAt = course.getCreatedAt();
+        this.picture = course.getPicture();
     }
 
     public static Page<CourseDTO> convertPage(Page<Course> courses) {
@@ -39,8 +41,12 @@ public class CourseDTO {
         return description;
     }
 
-    public Long getChannelId() {
-        return channelId;
+    public Long getClientId() {
+        return clientId;
+    }
+
+    public String getPicture() {
+        return picture;
     }
 
     public LocalDateTime getCreatedAt() {

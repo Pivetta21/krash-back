@@ -5,7 +5,8 @@ import br.pivetta.krash.model.Course;
 public class CourseFORM {
     private String name;
     private String description;
-    private Long channelId;
+    private Long clientId;
+    private String picture;
 
     public CourseFORM() {
     }
@@ -13,6 +14,7 @@ public class CourseFORM {
     public Course updateCourse(Course course) {
         course.setName(name);
         course.setDescription(description);
+        course.setPicture(picture);
 
         return course;
     }
@@ -33,11 +35,19 @@ public class CourseFORM {
         this.description = description;
     }
 
-    public Long getChannelId() {
-        return channelId;
+    public Long getClientId() {
+        return clientId;
     }
 
-    public void setChannelId(Long channelId) {
-        this.channelId = channelId;
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 }

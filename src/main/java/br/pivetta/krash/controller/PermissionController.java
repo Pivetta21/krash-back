@@ -27,7 +27,7 @@ public class PermissionController {
 
     @Cacheable(value = "permissionsList")
     @GetMapping
-    public Page<PermissionDTO> showPermissions(@RequestParam(required = false) String permissionName, Pageable pageable) {
+    public Page<PermissionDTO> getPermissions(@RequestParam(required = false) String permissionName, Pageable pageable) {
         if(permissionName != null) {
             return PermissionDTO.convertPage(permissionRepository.findByName(permissionName, pageable));
         }

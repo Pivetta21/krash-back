@@ -8,6 +8,7 @@ import br.pivetta.krash.repository.LessonRepository;
 import br.pivetta.krash.repository.ModuleRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +30,14 @@ public class LessonController {
     }
 
     @GetMapping
-    public Page<LessonDTO> showLessons(Pageable pageable) {
-        Page<Lesson> lessons = lessonRepository.findAll(pageable);
+    public Page<LessonDTO> getLessons(@RequestParam(required = false) Long courseId, @PageableDefault(sort = { "number"}) Pageable pageable) {
+        Page<Lesson> lessons;
+
+        if (courseId != null) {
+            lessons = lessonRepository.findByModule_Course_Id(courseId, pageable);
+        } else {
+            lessons = lessonRepository.findAll(pageable);
+        }
 
         return LessonDTO.convertPage(lessons);
     }
