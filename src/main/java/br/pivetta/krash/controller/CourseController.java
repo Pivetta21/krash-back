@@ -7,6 +7,8 @@ import br.pivetta.krash.model.Course;
 
 import br.pivetta.krash.repository.ClientRepository;
 import br.pivetta.krash.repository.CourseRepository;
+import br.pivetta.krash.repository.LessonRepository;
+import br.pivetta.krash.repository.ModuleRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -23,10 +25,14 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/course")
 public class CourseController {
+    private final LessonRepository lessonRepository;
+    private final ModuleRepository moduleRepository;
     private final CourseRepository courseRepository;
     private final ClientRepository clientRepository;
 
-    public CourseController(CourseRepository courseRepository, ClientRepository clientRepository) {
+    public CourseController(CourseRepository courseRepository, LessonRepository lessonRepository, ClientRepository clientRepository, ModuleRepository moduleRepository) {
+        this.lessonRepository = lessonRepository;
+        this.moduleRepository = moduleRepository;
         this.courseRepository = courseRepository;
         this.clientRepository = clientRepository;
     }
@@ -112,7 +118,11 @@ public class CourseController {
             return ResponseEntity.notFound().build();
         }
 
-        courseRepository.delete(courseOptional.get());
+        Course course = courseOptional.get();
+
+        lessonRepository.deleteByModule_CourseId(course.getId());
+        moduleRepository.deleteByCourseId(course.getId());
+        courseRepository.delete(course);
 
         return ResponseEntity.ok().build();
     }
