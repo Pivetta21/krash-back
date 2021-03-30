@@ -10,7 +10,7 @@ public class CourseDTO {
     private Long id;
     private String name;
     private String description;
-    private Client client;
+    private ClientDTO client;
     private String picture;
     private LocalDateTime createdAt;
 
@@ -21,7 +21,7 @@ public class CourseDTO {
         this.id = course.getId();
         this.name = course.getName();
         this.description = course.getDescription();
-        this.client = course.getClient();
+        this.client = new ClientDTO(course.getClient());
         this.createdAt = course.getCreatedAt();
         this.picture = course.getPicture();
     }
@@ -42,7 +42,7 @@ public class CourseDTO {
         return description;
     }
 
-    public Client getClient() {
+    public ClientDTO getClient() {
         return client;
     }
 
