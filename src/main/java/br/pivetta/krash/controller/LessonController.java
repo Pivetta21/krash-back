@@ -30,10 +30,16 @@ public class LessonController {
     }
 
     @GetMapping
-    public Page<LessonDTO> getLessons(@RequestParam(required = false) Long courseId, @PageableDefault(sort = { "number"}) Pageable pageable) {
+    public Page<LessonDTO> getLessons(
+            @RequestParam(required = false) Long moduleId,
+            @RequestParam(required = false) Long courseId,
+            @PageableDefault(sort = { "number"}) Pageable pageable
+    ) {
         Page<Lesson> lessons;
 
-        if (courseId != null) {
+        if (moduleId != null) {
+            lessons = lessonRepository.findByModule_Id(moduleId, pageable);
+        } else if (courseId != null) {
             lessons = lessonRepository.findByModule_Course_Id(courseId, pageable);
         } else {
             lessons = lessonRepository.findAll(pageable);
