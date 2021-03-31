@@ -1,5 +1,6 @@
 package br.pivetta.krash.dto;
 
+import br.pivetta.krash.model.Client;
 import br.pivetta.krash.model.Course;
 import org.springframework.data.domain.Page;
 
@@ -9,7 +10,7 @@ public class CourseDTO {
     private Long id;
     private String name;
     private String description;
-    private Long clientId;
+    private ClientDTO client;
     private String picture;
     private LocalDateTime createdAt;
 
@@ -20,7 +21,7 @@ public class CourseDTO {
         this.id = course.getId();
         this.name = course.getName();
         this.description = course.getDescription();
-        this.clientId = course.getClient().getId();
+        this.client = new ClientDTO(course.getClient());
         this.createdAt = course.getCreatedAt();
         this.picture = course.getPicture();
     }
@@ -41,8 +42,8 @@ public class CourseDTO {
         return description;
     }
 
-    public Long getClientId() {
-        return clientId;
+    public ClientDTO getClient() {
+        return client;
     }
 
     public String getPicture() {

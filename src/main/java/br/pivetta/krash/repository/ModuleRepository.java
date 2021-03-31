@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ModuleRepository extends JpaRepository<Module, Long> {
     Page<Module> findByCourse_Id(Long courseId, Pageable pageable);
+
+    void deleteByCourseId(Long courseId);
 }

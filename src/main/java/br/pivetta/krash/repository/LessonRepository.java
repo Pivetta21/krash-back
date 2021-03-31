@@ -11,4 +11,6 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     Page<Lesson> findByModule_Id(Long moduleId, Pageable pageable);
 
     Page<Lesson> findByModule_Course_Id(Long courseId, Pageable pageable);
+
+    void deleteByModule_CourseId(Long courseId);
 }
