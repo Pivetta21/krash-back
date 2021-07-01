@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:9.6
+    volumes:
+    - pgdata:/var/lib/postgressql/data
+    ports:
+    - 5555:5432
+    environment:
+      - POSTGRES_DB=krash
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/krash
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=1234
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    links:
+      - postgres
+    depends_on:
+      - postgres
+volumes:
+  pgdata: {}
